@@ -1,0 +1,27 @@
+{
+  "template": "https://github.com/getpelican/cookiecutter-pelican-plugin",
+  "commit": "8d77add0a1b4e0e11bacbf21bcfc91bc1a15fbe9",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "plugin_name": "Open Library Book Reviews",
+      "repo_name": "open-library-book-reviews",
+      "package_name": "open_library_book_reviews",
+      "distribution_name": "pelican-open-library-book-reviews",
+      "version": "0.0.0",
+      "description": "Add metadata from Open Library to book review posts done in Pelican.",
+      "authors": "({name = \"Michael Van Delft\", email = \"michael@xo.tc\"})",
+      "keywords": "\"pelican\", \"plugin\"",
+      "readme": "README.md",
+      "contributing": "CONTRIBUTING.md",
+      "license": "MIT License|MIT",
+      "repo_url": "https://github.com/HybridAU/open-library-book-reviews",
+      "dev_status": "1 - Planning",
+      "tests_exist": true,
+      "python_version": ">=3.8.1,<4.0",
+      "pelican_version": ">=4.5",
+      "_template": "https://github.com/getpelican/cookiecutter-pelican-plugin"
+    }
+  },
+  "directory": null
+}

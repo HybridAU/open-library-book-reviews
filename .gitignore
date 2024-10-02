@@ -1,2 +1,5 @@
 .pdm-python
 pdm.lock
+
+# PyCharm stuff
+.idea/

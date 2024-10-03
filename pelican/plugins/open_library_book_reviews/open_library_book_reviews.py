@@ -1,9 +1,10 @@
+import json
 import logging
 
 import requests
 from pelican.readers import BaseReader
-
 from pelican import signals
+from pathlib import Path
 
 log = logging.getLogger(__name__)
 open_library_url = "https://openlibrary.org/"
@@ -24,42 +25,39 @@ def add_metadata_and_tags(generator, metadata):
     base_reader = BaseReader(settings)
 
     if "olid" in metadata:
-        book_details = fetch_book_details(metadata["olid"])
+        book_details = fetch_book_details(metadata["olid"], settings)
         metadata["open_library_book_details"] = book_details
 
-    if "tags" in metadata:
-        metadata["tags"].extend(base_reader.process_metadata("tags", "Open Library"))
+        if "tags" in metadata:
+            metadata["tags"].extend(
+                base_reader.process_metadata("tags", "Open Library")
+            )
+        else:
+            metadata["tags"] = base_reader.process_metadata("tags", "Open Library")
+
+
+def fetch_book_details(olid, settings):
+    cache_dir = (
+        settings.get("OPEN_LIBRARY_BOOK_REVIEWS", {}).get("cache_directory")
+        or "open_library_cache"
+    )
+    Path(cache_dir, "books").mkdir(parents=True, exist_ok=True)
+    file_path = Path(cache_dir, "books", f"{olid}.json")
+
+    # Check for book data in cache first
+    if file_path.is_file():
+        book_data = json.loads(open(file_path, "r").read())
     else:
-        metadata["tags"] = base_reader.process_metadata("tags", "Open Library")
-
-
-def fetch_book_details(OLID):
-    mock_data = {
-        "title": "The Vexed Generation",
-        "publish_date": "2019",
-        "publishers": ["Rocket Hat Industries"],
-        "type": {"key": "/type/edition"},
-        "isbn_13": ["9781950056026"],
-        "isbn_10": ["1950056023"],
-        "series": ["Magic 2.0"],
-        "key": "/books/OL32222701M",
-        "works": [{"key": "/works/OL22598730W"}],
-        "covers": [13233209],
-        "source_records": ["amazon:1950056023"],
-        "latest_revision": 5,
-        "revision": 5,
-        "created": {"type": "/type/datetime", "value": "2021-04-20T09:14:26.394088"},
-        "last_modified": {
-            "type": "/type/datetime",
-            "value": "2023-02-03T16:17:42.318825",
-        },
-    }
-    # response = requests.get(f"{open_library_url}books/{OLID}.json", headers=headers)
-    # if response.status_code == 200:
-    #     return response.json()
+        log.warning(f"Could not find cached info downloading {olid=}")
+        response = requests.get(f"{open_library_url}books/{olid}.json", headers=headers)
+        if response.status_code == 200:
+            book_data = response.json()
+            open(file_path, "w").write(json.dumps(book_data))
+        else:
+            book_data = {}
 
     # Just return mock data until we can get the caching sorted out
-    return mock_data
+    return book_data
 
 
 def register():

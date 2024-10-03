@@ -1,5 +1,5 @@
-Open Library Book Reviews: A Plugin for Pelican
-====================================================
+# Open Library Book Reviews: A Plugin for Pelican
+
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/pelican-plugins/open-library-book-reviews/main.yml?branch=main)](https://github.com/HybridAU/open-library-book-reviews/actions)
 [![PyPI Version](https://img.shields.io/pypi/v/pelican-open-library-book-reviews)](https://pypi.org/project/pelican-open-library-book-reviews/)
@@ -8,8 +8,7 @@ Open Library Book Reviews: A Plugin for Pelican
 
 Add metadata from Open Library to book review posts done in Pelican.
 
-Installation
-------------
+## Installation
 
 This plugin can be installed via:
 
@@ -17,13 +16,31 @@ This plugin can be installed via:
 
 As long as you have not explicitly added a `PLUGINS` setting to your Pelican settings file, then the newly-installed plugin should be automatically detected and enabled. Otherwise, you must add `open_library_book_reviews` to your existing `PLUGINS` list. For more information, please see the [How to Use Plugins](https://docs.getpelican.com/en/latest/plugins.html#how-to-use-plugins) documentation.
 
-Usage
------
+## Usage
 
-<<Add plugin details here>>
+Add an open library ID to the metadata of a post to have the cover and metadata included e.g.
 
-Contributing
-------------
+```markdown
+Title: Night Watch
+Date: 2024-01-01
+Category: Posts
+OLID: OL31468402M
+
+Awesome book, have read many times, would read again.
+
+```
+
+### Settings
+
+The defaults should work, below is a list of all settings that can be configured
+
+```python
+OPEN_LIBRARY_BOOK_REVIEWS = {
+    "cache_directory": "open_library_cache"
+}
+```
+
+## Contributing
 
 Contributions are welcome and much appreciated. Every little bit helps. You can contribute by improving the documentation, adding missing features, and fixing bugs. You can also help out by reviewing and commenting on [existing issues][].
 

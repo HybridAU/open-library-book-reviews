@@ -29,6 +29,9 @@ class TestOpenLibraryPlugin(unittest.TestCase):
                 "SITEURL": "http://localhost",
                 "PATH": TEST_DATA,
                 "OUTPUT_PATH": self.output_path,
+                "OPEN_LIBRARY_BOOK_REVIEWS": {
+                    "cache_directory": "pelican/plugins/open_library_book_reviews/test_data/open_library_cache",
+                },
                 "PLUGINS": [open_library_book_reviews],
             }
         )
@@ -41,3 +44,9 @@ class TestOpenLibraryPlugin(unittest.TestCase):
         with open(Path(self.output_path) / "night-watch.html") as night_watch_review:
             contents = night_watch_review.read()
             self.assertIn("Open Library", contents)
+
+
+# TODO Tests:
+# * Nothing is done to posts that don't have an OLID
+# * Requests are only made when cached data doesn't exist
+# * Metadata (e.g. ISBN) is added correctly.

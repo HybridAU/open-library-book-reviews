@@ -1,10 +1,11 @@
+import unittest
 from pathlib import Path
 from shutil import rmtree
 from tempfile import mkdtemp
-import unittest
+
+from pelican.settings import read_settings
 
 from pelican import Pelican
-from pelican.settings import read_settings
 
 from . import open_library_book_reviews
 
@@ -22,8 +23,6 @@ class TestOpenLibraryPlugin(unittest.TestCase):
         rmtree(self.output_path)
 
     def _run_pelican(self):
-        # Debugging... It works locally but not in GitHub actions.
-        print(TEST_DATA)
         settings = read_settings(
             override={
                 "CACHE_CONTENT": False,

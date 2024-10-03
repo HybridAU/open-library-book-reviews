@@ -9,7 +9,7 @@ from pelican.settings import read_settings
 from . import open_library_book_reviews
 
 BASE_DIR = Path(".").resolve()
-TEST_DATA = BASE_DIR / "pelican/plugins/open_library_book_reviews/test_data"
+TEST_DATA = BASE_DIR / "test_data"
 
 
 class TestOpenLibraryPlugin(unittest.TestCase):
@@ -22,11 +22,13 @@ class TestOpenLibraryPlugin(unittest.TestCase):
         rmtree(self.output_path)
 
     def _run_pelican(self):
+        # Debugging... It works locally but not in GitHub actions.
+        print(TEST_DATA)
         settings = read_settings(
             override={
                 "CACHE_CONTENT": False,
                 "SITEURL": "http://localhost",
-                "CONTENT": TEST_DATA,
+                "CONTENT": "/home/runner/work/open-library-book-reviews/open-library-book-reviews/pelican/plugins/open_library_book_reviews/test_data",
                 "OUTPUT_PATH": self.output_path,
                 "PLUGINS": [open_library_book_reviews],
             }

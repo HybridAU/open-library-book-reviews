@@ -1,8 +1,8 @@
 import logging
 
 from pelican import signals
-from pelican.readers import BaseReader
 from pelican.generators import ArticlesGenerator
+from pelican.readers import BaseReader
 
 log = logging.getLogger(__name__)
 

@@ -9,7 +9,7 @@ from pelican.settings import read_settings
 from . import open_library_book_reviews
 
 BASE_DIR = Path(".").resolve()
-TEST_DATA = BASE_DIR / "test_data"
+TEST_DATA = BASE_DIR / "pelican/plugins/open_library_book_reviews/test_data"
 
 
 class TestOpenLibraryPlugin(unittest.TestCase):
@@ -35,9 +35,7 @@ class TestOpenLibraryPlugin(unittest.TestCase):
         pelican.run()
 
     def test_adds_open_library_tag(self):
-        """
-        Just a simple test to get something going.
-        """
+        """Just a simple test to get something going."""
         self._run_pelican()
         with open(Path(self.output_path) / "night-watch.html") as night_watch_review:
             contents = night_watch_review.read()
